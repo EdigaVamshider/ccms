@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCMS - Sign In</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body style="align-items: center; justify-content: center; background: radial-gradient(circle at top, #111827, #000);">
+
+  <div class="glass-card animate-fade-in" style="width: 100%; max-width: 420px; position: relative; z-index: 10;">
+    
+    <div class="text-center mb-4">
+      <h2 style="font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em;">Welcome to CCMS</h2>
+      <p style="color: var(--text-muted); margin-top: 0.5rem; font-size: 0.95rem;">Sign in to continue to your dashboard.</p>
+    </div>
+
+    <!-- Toggle Buttons -->
+    <div class="flex gap-2 mb-4" style="background: rgba(255,255,255,0.05); padding: 0.35rem; border-radius: 999px;">
+      <button id="btnStudentTab" class="btn btn-full" style="background: var(--card-bg); color: var(--text-main); border: 1px solid var(--card-border); box-shadow: 0 4px 12px rgba(0,0,0,0.2);">Student</button>
+      <button id="btnAdminTab" class="btn btn-full" style="background: transparent; color: var(--text-muted); border: 1px solid transparent;">Admin</button>
+    </div>
+
+    <!-- Student Form -->
+    <form id="studentLoginForm">
+      <div class="form-group">
+        <input type="text" id="studentId" placeholder=" " required autocomplete="off">
+        <label for="studentId">Student ID</label>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full flex justify-center gap-2" id="studentBtn">
+        <span>Sign in as Student</span>
+        <div id="studentSpinner" class="spinner hidden" style="width: 1rem; height: 1rem; border-width: 2px;"></div>
+      </button>
+    </form>
+
+    <!-- Admin Form -->
+    <form id="adminLoginForm" class="hidden">
+      <div class="form-group">
+        <input type="text" id="adminId" placeholder=" " required autocomplete="off">
+        <label for="adminId">Admin ID</label>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full flex justify-center gap-2" id="adminBtn" style="background: #fff; color: #000;">
+        <span>Sign in as Admin</span>
+        <div id="adminSpinner" class="spinner hidden" style="width: 1rem; height: 1rem; border-width: 2px; border-color: rgba(0,0,0,0.2); border-top-color: #000;"></div>
+      </button>
+    </form>
+    
+    <div class="text-center mt-2" style="margin-top: 2rem;">
+      <a href="landing.html" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: none; transition: color 0.2s;">← Back to Home</a>
+    </div>
+
+  </div>
+
+  <!-- Background Glow -->
+  <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; pointer-events: none;">
+    <div style="position: absolute; top: -20%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%);"></div>
+  </div>
+
+  <script src="supabase.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>

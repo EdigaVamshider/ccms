@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - CCMS</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">CCMS Admin</div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item active">Dashboard Overview</a>
+        <a href="admin.html" class="nav-item">Manage Complaints</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="#" id="logoutBtn" class="nav-item text-muted">Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <header class="page-header animate-fade-in">
+        <div>
+          <h1 class="page-title">Analytics</h1>
+          <p style="color: var(--text-muted); margin-top: 0.25rem;">System-wide statistics and workflows.</p>
+        </div>
+        <div class="user-profile">
+          <span style="font-size: 1.25rem;">📊</span>
+          <span id="welcomeText">Admin</span>
+        </div>
+      </header>
+
+      <!-- Advanced Metrics (Admin level) -->
+      <section class="metrics-grid animate-fade-in" style="animation-delay: 0.1s;">
+        <div class="metric-card">
+          <span class="metric-title">System Total</span>
+          <span class="metric-value filter-drop" id="statTotal">-</span>
+        </div>
+        <div class="metric-card" style="border-top: 2px solid var(--yellow);">
+          <span class="metric-title">Backlog (Pending)</span>
+          <span class="metric-value pending" id="statPending">-</span>
+        </div>
+        <div class="metric-card" style="border-top: 2px solid var(--primary);">
+          <span class="metric-title">Active (In Progress)</span>
+          <span class="metric-value progress" id="statProgress">-</span>
+        </div>
+        <div class="metric-card" style="border-top: 2px solid var(--green);">
+          <span class="metric-title">Completed (Resolved)</span>
+          <span class="metric-value resolved" id="statResolved">-</span>
+        </div>
+      </section>
+
+      <!-- Chart area -->
+      <section class="glass-card animate-fade-in" style="animation-delay: 0.2s;">
+        <h2 class="card-title">Resolution Trajectory</h2>
+        <div style="position: relative; height: 50vh; width: 100%;">
+          <canvas id="complaintsChart"></canvas>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="supabase.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCMS - Campus Complaint Management System</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --bg-color: #000000;
+      --card-bg: #0a0a0a;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+      --primary: #3b82f6; /* Blue */
+      --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      --green: #10b981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { letter-spacing: -0.02em; }
+    a { text-decoration: none; color: inherit; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.75rem 1.5rem; border-radius: 9999px; font-weight: 500;
+      font-size: 0.95rem; transition: all 0.2s ease; cursor: default;
+    }
+    .btn-primary { background-color: var(--primary); color: #fff; border: none; }
+    .btn-primary:hover { background-color: #2563eb; transform: scale(1.02); }
+    .btn-outline { background-color: transparent; color: #fff; border: 1px solid var(--card-border); }
+    .btn-outline:hover { background-color: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.2); }
+
+    .navbar {
+      position: fixed; top: 0; width: 100%; z-index: 50;
+      background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border); padding: 1rem 0;
+    }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 700; font-size: 1.25rem; color: var(--primary); letter-spacing: -0.03em; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { font-size: 0.9rem; color: var(--text-muted); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text-main); }
+
+    .hero { position: relative; padding: 12rem 0 8rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .hero::before {
+      content: ''; position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px; background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%); pointer-events: none; z-index: -1;
+    }
+    .badge {
+      display: inline-block; padding: 0.35rem 0.8rem; background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 999px; color: var(--primary);
+      font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem;
+    }
+    .hero h1 { font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; max-width: 800px; }
+    .gradient-text-green { background: linear-gradient(to right, #3b82f6, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: var(--text-muted); font-size: 1.25rem; max-width: 600px; margin-bottom: 2.5rem; }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; }
+
+    .section-tag { font-size: 0.85rem; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; display: inline-block; }
+    .features-section { padding: 6rem 0; }
+    .section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+    .section-subtitle { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 3rem; max-width: 600px; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .feature-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 2rem; transition: transform 0.3s ease, background 0.3s ease; }
+    .feature-card:hover { background: rgba(255, 255, 255, 0.05); transform: translateY(-2px); }
+    .feature-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; font-size: 1.25rem; }
+    .icon-blue { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+    .icon-green { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+    .icon-orange { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+    .icon-purple { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+    .feature-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .feature-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 2rem; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; margin: 4rem 0 6rem; text-align: center; }
+    .stat-item { padding: 1rem; }
+    .stat-value { font-size: 2.5rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
+    .stat-value.green { color: var(--green); }
+    .stat-label { color: var(--text-muted); font-size: 0.95rem; }
+
+    .bento-section { padding: 4rem 0 8rem; }
+    .bento-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 1.5rem; }
+    .bento-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 24px; padding: 3rem; position: relative; overflow: hidden; }
+    .bento-card h3 { font-size: 4rem; font-weight: 800; color: var(--primary); opacity: 0.8; margin-bottom: 1rem; line-height: 1; }
+    .bento-card.second h3 { color: var(--text-muted); opacity: 0.3; }
+    .bento-card h4 { font-size: 1.5rem; margin-bottom: 1rem; }
+    .bento-card p { color: var(--text-muted); max-width: 400px; }
+    
+    .bento-ui { margin-top: 2rem; padding: 1.5rem; background: #111; border: 1px solid #222; border-radius: 12px; }
+    .bento-badge { display: inline-block; padding: 0.25rem 0.5rem; background: rgba(16, 185, 129, 0.1); color: var(--green); border-radius: 4px; font-size: 0.75rem; margin-bottom: 0.5rem; border: 1px solid rgba(16, 185, 129, 0.2); }
+    .ui-skeleton { height: 8px; background: #222; border-radius: 4px; margin-bottom: 8px; }
+    .ui-skeleton.short { width: 60%; }
+
+    .cta-section { padding: 8rem 0; text-align: center; border-top: 1px solid var(--card-border); }
+    .cta-section h2 { font-size: 3rem; margin-bottom: 1rem; }
+    .cta-section p { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2rem; }
+
+    .footer { border-top: 1px solid var(--card-border); padding: 3rem 0; color: var(--text-muted); font-size: 0.9rem; }
+    .footer-container { display: flex; justify-content: space-between; align-items: center; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a:hover { color: var(--text-main); }
+    
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .navbar, .hero, .features-section, .bento-section, .cta-section, .footer {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">CCMS</a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="student.html">Student</a>
+        <a href="admin.html">Admin</a>
+        <a href="dashboard.html">Dashboard</a>
+      </div>
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-outline">Log in</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero container">
+    <div class="badge">Campus Complaint Management</div>
+    <h1>Every complaint.<br><span class="gradient-text-green">Resolved faster.</span></h1>
+    <p>A modern, streamlined system built to track, manage, and resolve campus issues efficiently. No paperwork, complete transparency.</p>
+    <div class="hero-buttons">
+      <a href="index.html" class="btn btn-primary">Start Now</a>
+      <a href="dashboard.html" class="btn btn-outline">View Dashboard →</a>
+    </div>
+  </header>
+
+  <!-- Features Section -->
+  <section id="features" class="features-section container">
+    <span class="section-tag">Features</span>
+    <h2 class="section-title">Everything you need.<br>Nothing you don't.</h2>
+    <p class="section-subtitle">A simple setup that brings students and administrators together to fix problems efficiently.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon icon-blue">📝</div>
+        <h3>Submit Complaints</h3>
+        <p>Easily log issues regarding hostel, academics, IT or food. Provide details and categorize for fast routing.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-green">⚡</div>
+        <h3>Track Status</h3>
+        <p>Real-time updates. Know instantly when your issue moves from Pending to In Progress to Resolved.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-orange">🛡️</div>
+        <h3>Admin Portal</h3>
+        <p>A unified dashboard for admins to oversee requests, update statuses, and log resolution remarks.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-purple">📊</div>
+        <h3>Analytics</h3>
+        <p>Visual breakdowns of issue volumes and resolution rates delivered automatically via Chart.js.</p>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-value primary">100%</div>
+        <div class="stat-label">Tracking Accuracy</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value green">24h</div>
+        <div class="stat-label">Avg. Resolution Time</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Physical Paperwork</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento Section -->
+  <section class="bento-section container">
+    <span class="section-tag">How it works</span>
+    <h2 class="section-title">Simple for everyone involved.</h2>
+    <p class="section-subtitle">Seamless workflow from submission to resolution.</p>
+
+    <div class="bento-grid">
+      <div class="bento-card">
+        <h3>01</h3>
+        <h4>Submit to the portal</h4>
+        <p>Students log in and file a complaint. It's immediately registered with a Pending status.</p>
+        
+        <div class="bento-ui">
+          <div class="ui-skeleton"></div>
+          <div class="ui-skeleton short"></div>
+          <br>
+          <div class="bento-badge" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border-color: rgba(245, 158, 11, 0.2);">Status: Pending</div>
+        </div>
+      </div>
+      
+      <div class="bento-card second">
+        <h3>02</h3>
+        <h4>Admins take action</h4>
+        <p>Issues are reviewed by admins. Statuses are pushed to In Progress or Resolved securely.</p>
+        
+        <div class="bento-ui" style="margin-top: 5.5rem;">
+          <div class="bento-badge">Status: Resolved</div>
+          <div class="ui-skeleton"></div>
+          <div class="ui-skeleton short"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section container">
+    <h2>Built for your project. Ready to demo.</h2>
+    <p>Experience the Campus Complaint Management System today.</p>
+    <div class="hero-buttons">
+      <a href="index.html" class="btn btn-primary">Log in now</a>
+      <a href="dashboard.html" class="btn btn-outline">Explore Metrics</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div>&copy; 2026 CCMS. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="student.html">Student</a>
+        <a href="admin.html">Admin</a>
+        <a href="dashboard.html">Dashboard</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="supabase.js"></script>
+
+  <canvas id="bg-canvas"></canvas>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+      
+      let width, height;
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      const particles = [];
+      const numParticles = 80;
+      const colors = ['#2997ff', '#30d158', '#ffffff20'];
+      
+      let mouse = { x: -1000, y: -1000 };
+      
+      document.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+      document.addEventListener('mouseleave', () => {
+        mouse.x = -1000;
+        mouse.y = -1000;
+      });
+      
+      for (let i = 0; i < numParticles; i++) {
+        const size = Math.random() * 3 + 2; // 2 to 5px
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const opacity = Math.random() * 0.4 + 0.3; // 0.3 to 0.7
+        
+        const x = Math.random() * width;
+        const y = Math.random() * height;
+        
+        particles.push({
+          x: x,
+          y: y,
+          originX: x,
+          originY: y,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          size: size,
+          color: color,
+          opacity: opacity
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        
+        const ease = 0.05;
+        
+        particles.forEach(p => {
+          p.originX += p.vx;
+          p.originY += p.vy;
+          
+          if (p.originX < 0) p.originX = width;
+          if (p.originX > width) p.originX = 0;
+          if (p.originY < 0) p.originY = height;
+          if (p.originY > height) p.originY = 0;
+          
+          const dx = p.originX - mouse.x;
+          const dy = p.originY - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          
+          let targetX = p.originX;
+          let targetY = p.originY;
+          
+          if (dist < 120) {
+            const angle = Math.atan2(dy, dx);
+            const force = (120 - dist) / 120;
+            const pushDist = force * 60; 
+            targetX = p.originX + Math.cos(angle) * pushDist;
+            targetY = p.originY + Math.sin(angle) * pushDist;
+          }
+          
+          p.x += (targetX - p.x) * ease;
+          p.y += (targetY - p.y) * ease;
+          
+          ctx.beginPath();
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = p.opacity;
+          ctx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        
+        requestAnimationFrame(animate);
+      }
+      
+      animate();
+    });
+  </script>
+</body>
+</html>

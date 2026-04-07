@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal - CCMS</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">CCMS</div>
+      <nav class="sidebar-nav">
+        <a href="student.html" class="nav-item active">My Portal</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="#" id="logoutBtn" class="nav-item text-muted">Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- Top Header -->
+      <header class="page-header animate-fade-in">
+        <div>
+          <h1 class="page-title">Student Portal</h1>
+          <p style="color: var(--text-muted); margin-top: 0.25rem;">Manage and track your reported issues.</p>
+        </div>
+        <div class="user-profile">
+          <span style="font-size: 1.25rem;">👤</span>
+          <span id="welcomeText">Welcome</span>
+        </div>
+      </header>
+
+      <!-- Metrics -->
+      <section class="metrics-grid animate-fade-in" style="animation-delay: 0.1s;">
+        <div class="metric-card">
+          <span class="metric-title">Total Complaints</span>
+          <span class="metric-value filter-drop" id="statTotal">-</span>
+        </div>
+        <div class="metric-card" style="border-top: 2px solid var(--yellow);">
+          <span class="metric-title">Pending</span>
+          <span class="metric-value pending" id="statPending">-</span>
+        </div>
+        <div class="metric-card" style="border-top: 2px solid var(--green);">
+          <span class="metric-title">Resolved</span>
+          <span class="metric-value resolved" id="statResolved">-</span>
+        </div>
+      </section>
+
+      <!-- Main Layout -->
+      <section class="flex gap-2 animate-fade-in" style="flex-wrap: wrap; animation-delay: 0.2s;">
+        
+        <!-- Submit Complaint -->
+        <div class="glass-card" style="flex: 1; min-width: 320px;">
+          <h2 class="card-title">Submit a Complaint</h2>
+          <form id="complaintForm">
+            <div class="form-group">
+              <select id="category" required>
+                <option value="" disabled selected hidden></option>
+                <option value="Hostel">Hostel/Accommodation</option>
+                <option value="Academics">Academics</option>
+                <option value="Maintenance">Maintenance/Infrastructure</option>
+                <option value="IT">IT/Internet</option>
+                <option value="Food">Food/Mess</option>
+                <option value="Other">Other</option>
+              </select>
+              <label for="category">Category</label>
+            </div>
+            <div class="form-group">
+              <textarea id="description" rows="5" placeholder=" " required></textarea>
+              <label for="description">Detailed Description</label>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;" id="submitComplaintBtn">
+              <span class="flex align-center justify-center gap-2">
+                Submit Complaint
+                <div id="submitSpinner" class="spinner hidden" style="width: 1rem; height: 1rem; border-width: 2px;"></div>
+              </span>
+            </button>
+          </form>
+        </div>
+
+        <!-- History -->
+        <div class="glass-card" style="flex: 2; min-width: 400px; padding: 2rem 0;">
+          <h2 class="card-title" style="padding: 0 2rem;">My History</h2>
+          <div class="table-container" style="border-radius: 0; border-left: none; border-right: none;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Category</th>
+                  <th>Description</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="complaintsTableBody">
+                <tr><td colspan="4" class="text-center">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <script src="supabase.js"></script>
+  <script src="student.js"></script>
+</body>
+</html>
